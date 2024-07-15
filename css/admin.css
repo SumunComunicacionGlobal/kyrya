@@ -1,0 +1,2 @@
+tr.has-post-thumbnail .row-title:before { font-family: 'Dashicons'; content: "\f128"; margin-right: 1rem; }
+.disabled { opacity: .5; }
