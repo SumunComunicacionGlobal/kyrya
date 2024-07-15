@@ -14,6 +14,11 @@ $mostrar_productos = true;
 $es_carrusel = false;
 // $botones = '';
 
+$taxonomies = $pto->taxonomies;
+if ( 'composicion' == $post_type ) {
+	$taxonomies = array('coleccion');
+}
+
 $container   = get_theme_mod( 'understrap_container_type' );
 
 if (es_composicion($post_type) && COLECCIONES_ID != $post->ID && ESTRUCTURAS_ID != 	$post->ID ) echo slider_destacados($post_type, false);
@@ -30,10 +35,10 @@ if (es_composicion($post_type) && COLECCIONES_ID != $post->ID && ESTRUCTURAS_ID 
 
 			<main class="site-main" id="main">
 
-				<?php foreach ($pto->taxonomies as $tax) {
+				<?php foreach ($taxonomies as $tax) {
 					$columnas = ($tax == 'coleccion') ? 5 : 4;
 					$terms_args = array(
-							'hide_empty'			=> 1,
+							'hide_empty'			=> false,
 							'taxonomy'				=> $tax,
 							'parent'				=> 0,
 						);

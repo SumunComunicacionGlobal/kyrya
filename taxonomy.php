@@ -122,7 +122,7 @@ $mostrar_productos = true;
 						$args_subterms = array(
 								'taxonomy'		=> $q_obj->taxonomy,
 								'parent'		=> $q_obj_trans->term_id,
-								'hide_empty'	=> true,
+								'hide_empty'	=> false,
 							);
 						$subterms = get_terms( $args_subterms);
 						if ('composicion' == $pt && !empty($subterms) ) $mostrar_productos = false;

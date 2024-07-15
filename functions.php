@@ -135,9 +135,12 @@ function inyectar_scripts_y_styles_personalizados() {
     }
 }
 
-add_filter('body_class', 'wpml_body_class');
-function wpml_body_class($classes) {
+add_filter('body_class', 'kyrya_body_class');
+function kyrya_body_class($classes) {
     $classes[] = ICL_LANGUAGE_CODE;
+    if ( is_front_page() ) {
+        $classes[] = 'navbar-transparent';
+    }
     return $classes;
 }
 
@@ -837,7 +840,7 @@ function kyrya_botones_acabados() {
 
     $r = '<div class="mt-10">';
     if ('acabado' != get_post_meta( get_the_ID(), 'archivo', true) && !is_tax('categoria_acabado') ) $r .= '<a class="btn btn-primary mb-1 mr-1 d-inline-block" href="'. $link_acabados.'" target="_blank" title="'. __( 'Ver todos nuestros acabados', 'kyrya' ).'">'. __( 'Ver todos nuestros acabados', 'kyrya' ).'</a>';
-    if ('apertura' != get_post_meta( get_the_ID(), 'archivo', true) && !is_tax('categoria_apertura') ) $r .= '<a class="btn btn-primary mb-1 d-inline-block" href="'. get_the_permalink( APERTURAS_ID ).'" target="_blank" title="'. __( 'Ver todos nuestros sistemas de apertura', 'kyrya' ).'">'. __( 'Ver todos nuestros sistemas de apertura', 'kyrya' ).'</a>';
+    // if ('apertura' != get_post_meta( get_the_ID(), 'archivo', true) && !is_tax('categoria_apertura') ) $r .= '<a class="btn btn-primary mb-1 d-inline-block" href="'. get_the_permalink( APERTURAS_ID ).'" target="_blank" title="'. __( 'Ver todos nuestros sistemas de apertura', 'kyrya' ).'">'. __( 'Ver todos nuestros sistemas de apertura', 'kyrya' ).'</a>';
     $r .= '</div>';
     return $r;
 }

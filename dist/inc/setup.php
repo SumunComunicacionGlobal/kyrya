@@ -576,6 +576,7 @@ function custom_post_type_integrated_spaces() {
 		'exclude_from_search'   => false,
 		'publicly_queryable'    => true,
 		'capability_type'       => 'page',
+		'taxonomies'			=> array('categoria_producto'),
 	);
 	register_post_type( 'integrated_space', $args );
 
@@ -619,6 +620,7 @@ function custom_post_type_solution_spaces() {
 		'exclude_from_search'   => false,
 		'publicly_queryable'    => true,
 		'capability_type'       => 'page',
+		'taxonomies'			=> array('categoria_producto'),
 	);
 	register_post_type( 'solution_space', $args );
 
@@ -809,7 +811,7 @@ function categoria_producto_function() {
 		'show_in_nav_menus'          => true,
 		'show_tagcloud'              => false,
 	);
-	register_taxonomy( 'categoria_producto', array( 'producto', 'composicion' ), $args );
+	register_taxonomy( 'categoria_producto', array( 'producto', 'composicion', 'solution_space', 'integrated_space' ), $args );
 
 }
 add_action( 'init', 'categoria_producto_function', 0 );

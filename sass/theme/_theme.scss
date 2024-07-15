@@ -489,6 +489,14 @@ body.pt-pt .show-lang-pt-pt {
 }
 /*****/
 
+body.navbar-transparent {
+
+  .navbar-brand img {
+    filter: brightness(0) invert(1);
+  }
+
+}
+
 @media all and (min-width: 768px) and (max-width: 991px) {
   article.term h2 {
       font-size: 1rem;

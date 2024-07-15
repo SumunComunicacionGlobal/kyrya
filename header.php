@@ -8,7 +8,7 @@
  */
 
 $container = get_theme_mod( 'understrap_container_type' );
-$logo = 'logo-kyrya.png';
+$logo = 'logo-kyrya.svg';
 if( is_singular()) {
 	$restricted = get_post_meta( get_the_ID(), '_wpmem_block', true );
 	if( $restricted == 1 ) {
@@ -20,7 +20,7 @@ $menu_transparente = '';
 $is_landing = false;
 if (is_page_template( 'page-templates/frontpage.php' )) {
 	$menu_transparente = ' transparente';
-	$logo = 'logo-kyrya-blanco.png';
+	// $logo = 'logo-kyrya-blanco.svg';
 	$navbar_class = 'navbar-dark';
 }
 if (is_page_template( 'page-templates/landing.php' )) {
@@ -64,14 +64,14 @@ if (is_page_template( 'page-templates/landing.php' )) {
 						<!-- Your site title as branding in the menu -->
 						<?php if ( ! has_custom_logo() ) { ?>
 													
-							<a class="navbar-brand" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/<?php echo $logo; ?>" alt="<?php bloginfo( 'name' ); ?>" /></a>
+							<a class="navbar-brand" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/<?php echo $logo; ?>" width="212" height="72" alt="<?php bloginfo( 'name' ); ?>" /></a>
 						
 						<?php } else {
 							the_custom_logo();
 						} ?><!-- end custom logo -->
-						<?php if (is_front_page()) echo boton_login(); ?>
+						<?php // if (is_front_page()) echo boton_login(); ?>
 						</div>
-					<?php mostrar_tagline(); ?>
+					<?php // mostrar_tagline(); ?>
 		
 					<button class="navbar-toggler" id="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
