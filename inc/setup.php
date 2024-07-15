@@ -412,8 +412,8 @@ if ( ! function_exists('custom_post_type_composicion') ) {
 function custom_post_type_composicion() {
 
 	$labels = array(
-		'name'                  => _x( 'Colecciones', 'Post Type General Name', 'kyrya' ),
-		'singular_name'         => _x( 'Colección', 'Post Type Singular Name', 'kyrya' ),
+		'name'                  => _x( 'Composiciones', 'Post Type General Name', 'kyrya' ),
+		'singular_name'         => _x( 'Composición', 'Post Type Singular Name', 'kyrya' ),
 		'menu_name'             => __( 'Composiciones', 'kyrya-admin' ),
 		'name_admin_bar'        => __( 'Composiciones', 'kyrya-admin' ),
 		'add_new'               => __( 'Añadir nueva Composición', 'kyrya-admin' ),
@@ -581,7 +581,7 @@ function custom_post_type_integrated_spaces() {
 	register_post_type( 'integrated_space', $args );
 
 }
-add_action( 'init', 'custom_post_type_integrated_spaces', 0 );
+// add_action( 'init', 'custom_post_type_integrated_spaces', 0 );
 
 }
 

@@ -89,65 +89,62 @@ if (is_search()) {
 ?>
 
 <article <?php post_class('box col-md-3 col-sm-6' . $aparecer . ' show-lang-' . $lang_code ); ?> id="post-<?php the_ID(); ?>">
-		<a class="no-underline <?php echo $modal_link; ?>" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+		
+	<a class="no-underline <?php echo $modal_link; ?>" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 		<!-- <a data-toggle="modal" data-target="#modal-ajax-post" class="no-underline modal-link" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"> -->
 		<!-- <a data-toggle="modal" data-target="#modal-ajax-post" class="no-underline" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"> -->
 		<!-- <a class="no-underline" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"> -->
-			<div class="hover-zoom">
-				<div class="miniatura <?php echo $bg_size; ?>" style="background-image:url('<?php echo $thumb_url; ?>'); background-position: center <?php echo $bgx;?>;">
-					<!-- <div class="overlay"></div> -->
-				</div>
+		
+		<div class="hover-zoom">
+			<div class="miniatura <?php echo $bg_size; ?>" style="background-image:url('<?php echo $thumb_url; ?>'); background-position: center <?php echo $bgx;?>;">
+				<!-- <div class="overlay"></div> -->
+			</div>
+
+			<?php opciones_de_producto( postmeta_variable($post_meta, 'opciones_de_producto') ); ?>
+
+		</div>
+
+		<div class="entry-content">
+
+			<header class="entry-header">
 
 				<?php if ($texto_destacado) {
 					echo '<span class="texto-destacado">' . $texto_destacado . '</span>';
 				} ?>
 
-				<?php opciones_de_producto( postmeta_variable($post_meta, 'opciones_de_producto') ); ?>
+				<?php echo '<h2 class="entry-title'.$clase_titulo.'">' . $titulo . '</h2>'; ?>
 
-			</div>
-			<div class="entry-content">
+				<?php if ( 'post' == $pt && !is_search() ) : ?>
 
-				<header class="entry-header">
+					<div class="entry-meta">
+						<?php understrap_posted_on(); ?>
+					</div><!-- .entry-meta -->
 
-					<?php echo '<h2 class="entry-title'.$clase_titulo.'">' . $titulo . '</h2>'; ?>
+				<?php endif; ?>
 
-					<?php if ( 'post' == $pt && !is_search() ) : ?>
+			</header><!-- .entry-header -->
 
-						<div class="entry-meta">
-							<?php understrap_posted_on(); ?>
-						</div><!-- .entry-meta -->
+			<?php if ($medidas) echo '<span class="medidas h6 icono ruler-blanco mr-3">'.$medidas.'</span>'; ?>
+			<?php if ($diametro) echo '<span class="medidas h6">Ø '.$diametro.'</span>'; ?>
+			<div class="excerpt"><?php 
+				// if ( es_composicion($pt) ) {
+				// 	the_excerpt();
+				// } else {
+				// 	if ('acabado' != $pt) echo get_post_field( 'post_excerpt', get_the_ID() );
+				// }
+				echo $descripcion;
+			?></div>
 
-					<?php endif; ?>
+			<?php
+			wp_link_pages( array(
+				'before' => '<div class="page-links">' . __( 'Pages:', 'understrap' ),
+				'after'  => '</div>',
+			) );
+			?>
 
-				</header><!-- .entry-header -->
+			<?php edit_post_link(); ?>
 
-				<?php if ($medidas) echo '<span class="medidas h6 icono ruler-blanco mr-3">'.$medidas.'</span>'; ?>
-				<?php if ($diametro) echo '<span class="medidas h6">Ø '.$diametro.'</span>'; ?>
-				<div class="excerpt"><?php 
-					// if ( es_composicion($pt) ) {
-					// 	the_excerpt();
-					// } else {
-					// 	if ('acabado' != $pt) echo get_post_field( 'post_excerpt', get_the_ID() );
-					// }
-					echo $descripcion;
-				?></div>
+		</div><!-- .entry-content -->
+	</a>
 
-				<?php
-				wp_link_pages( array(
-					'before' => '<div class="page-links">' . __( 'Pages:', 'understrap' ),
-					'after'  => '</div>',
-				) );
-				?>
-
-			</div><!-- .entry-content -->
-		</a>
-
-	<!--<footer class="entry-footer">-->
-
-		<?php // understrap_entry_footer(); ?>
-
-	<!--</footer> .entry-footer -->
-
-	<?php edit_post_link(); ?>
-	
 </article><!-- #post-## -->

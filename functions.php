@@ -223,18 +223,6 @@ function mostrar_tagline() {
 
 }
 
-add_action('wp_enqueue_scripts', 'google_fonts');
-function google_fonts() {
-	$query_args = array(
-        // 'family' => 'Montserrat:200,500|Roboto+Condensed',
-        'family' => 'Roboto+Condensed|Barlow:300,400,600',
-        'display' => 'swap',
-        'subset' => 'latin,latin-ext',
-	);
-	wp_register_style( 'kyrya_fonts', add_query_arg( $query_args, "//fonts.googleapis.com/css" ), array(), null );
-	wp_enqueue_style( 'kyrya_fonts' );
-}
-
 function redes_sociales_shortcode(  ) {
     $args = array(
             'post_type'         => 'red_social',
@@ -2475,3 +2463,19 @@ function modificar_destino_term_link( $url, $term, $taxonomy ) {
     return $url;
 }
 
+function smn_back_button() {
+    
+    $q_obj_trans = get_queried_object();
+
+    $ancestors = get_ancestors( $q_obj_trans->term_id, $q_obj_trans->taxonomy, 'taxonomy' );
+
+    if (!empty($ancestors)) {
+        $parent = get_term( $ancestors[0] );
+        echo '<a href="'.get_term_link( $parent ).'" class="btn btn-sm btn-outline-primary"><i class="fa fa-chevron-left mr-4"></i> '.sprintf(__( 'Volver a %s', 'kyrya' ), $parent->name ).'</a>';
+    } else {
+        if ( in_array( $q_obj_trans->taxonomy, array( 'categoria_producto', 'coleccion' ) ) ) {
+            echo '<a href="'. get_the_permalink( PRODUCTOS_ID ) . '" class="btn btn-sm btn-outline-primary"><i class="fa fa-chevron-left mr-4"></i> '. get_the_title( PRODUCTOS_ID ) .'</a>';
+        }
+    }
+
+}

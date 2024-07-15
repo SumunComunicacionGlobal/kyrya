@@ -85,18 +85,27 @@ $mostrar_productos = true;
 								if ($logo) {
 									echo wp_get_attachment_image( $logo['id'], 'medium' );
 								} else {
-									echo '<p class="h1 page-title '. $q_obj->taxonomy .'">' . single_term_title('', false) . '</p>';
+									echo '<div class="d-flex align-items-center">';
+										echo '<h1 class="page-title mb-0 mr-3 '. $q_obj->taxonomy .'">' . single_term_title('', false) . '</h1>';
+										smn_back_button();
+									echo '</div>';
 								}
 
 								opciones_de_producto($opciones_productos);
 
 								$description = get_the_archive_description();
 								if ('' != $description) {
-									echo '<div class="collapse" id="collapse-description">';
-									echo do_shortcode ( '<div class="taxonomy-description">' . $description . '</div>' );
-									echo '</div>';
 
-									echo '<p><a class="description-more-info" data-toggle="collapse" href="#collapse-description" role="button" aria-expanded="false" aria-controls="collapse-description"><i class="fa fa-info-circle"></i> '.__( 'Más información', 'kyrya' ).' <i class="fa fa-chevron-down girar"></i></a><p>';
+									$no_collapse = get_field( 'no_description_collapse', $q_obj_trans );
+									if ( $no_collapse ) {
+										echo do_shortcode ( '<div class="taxonomy-description">' . $description . '</div>' );
+									} else {
+										echo '<div class="collapse" id="collapse-description">';
+										echo do_shortcode ( '<div class="taxonomy-description">' . $description . '</div>' );
+										echo '</div>';
+
+										echo '<p><a class="description-more-info" data-toggle="collapse" href="#collapse-description" role="button" aria-expanded="false" aria-controls="collapse-description"><i class="fa fa-info-circle"></i> '.__( 'Más información', 'kyrya' ).' <i class="fa fa-chevron-down girar"></i></a><p>';
+									}
 
 								}
 								?>
@@ -129,16 +138,36 @@ $mostrar_productos = true;
 
 					?>
 
-
-				<?php if ( have_posts() && $mostrar_productos ) : ?>
 					<?php if (!empty($subterms)) { 
-							// echo '<h4><a class="btn btn-secondary" href="#subcategorias">' . __( 'Ver subcategorías', 'kyrya' ) . '</a></h4>'; 
-							echo '<a class="btn btn-primary btn-sm h4 mb-1 mr-1" href="#productos">' . $q_obj_trans->name . '</a>';
-							foreach ($subterms as $subterm) {
-								echo '<a class="btn btn-outline-secondary btn-sm h4 mb-1 mr-1" href="'.get_term_link( $subterm ).'">' . $subterm->name . '</a>';
+						// echo '<h4><a class="btn btn-secondary" href="#subcategorias">' . __( 'Ver subcategorías', 'kyrya' ) . '</a></h4>'; 
+						echo '<span class="btn btn-primary btn-sm h4 mb-1 mr-1">' . $q_obj_trans->name . '</span>';
+						foreach ($subterms as $subterm) {
+							echo '<a class="btn btn-outline-secondary btn-sm h4 mb-1 mr-1" href="'.get_term_link( $subterm ).'">' . $subterm->name . '</a>';
+						}
+					} else {
+						$args_sibling_terms = array(
+							'taxonomy'		=> $q_obj->taxonomy,
+							'parent'		=> $q_obj->parent,
+							'hide_empty'	=> false,
+						);
+
+						$sibling_terms = get_terms( $args_sibling_terms);
+						if (!empty($sibling_terms)) {
+
+							foreach ($sibling_terms as $subterm) {
+								if ( $subterm->term_id == $q_obj->term_id ) {
+									echo '<span class="btn btn-secondary btn-sm h4 mb-1 mr-1">' . $subterm->name . '</span>';
+								} else {
+									echo '<a class="btn btn-outline-secondary btn-sm h4 mb-1 mr-1" href="'.get_term_link( $subterm ).'">' . $subterm->name . '</a>';
+								}
 							}
+
+						}
+
 					}
 					?>
+
+					<?php if ( have_posts() && $mostrar_productos ) : ?>
 					<?php // if (!empty($subterms)) echo '<h2>' . __( 'Productos', 'kyrya' ) . '</h2>'; ?>
 					<div class="row no-gutters mb-5 pb-5 bloques" id="productos">
 						<?php while ( have_posts() ) : the_post(); ?>
@@ -161,13 +190,13 @@ $mostrar_productos = true;
 						<?php endwhile; ?>
 					</div>
 
-					<?php composiciones_ejemplo(); ?>
-
 				<?php else : ?>
 
-					<?php if( empty($subterms)) get_template_part( 'loop-templates/content', 'none' ); ?>
+					<?php // if( empty($subterms)) get_template_part( 'loop-templates/content', 'none' ); ?>
 
 				<?php endif; ?>
+
+				<?php composiciones_ejemplo(); ?>
 
 					<?php 
 						// $args_subterms = array(
@@ -193,13 +222,8 @@ $mostrar_productos = true;
 
 					?>
 
-				<?php
-					$ancestors = get_ancestors( $q_obj_trans->term_id, $q_obj->taxonomy, 'taxonomy' );
-					if (!empty($ancestors)) {
-						$parent = get_term( $ancestors[0] );
-						echo '<a href="'.get_term_link( $parent ).'" class="btn btn-primary"><i class="fa fa-chevron-left mr-4"></i> '.sprintf(__( 'Volver a %s', 'kyrya' ), $parent->name ).'</a>';
-					}
-				?>
+				<?php smn_back_button(); ?>
+
 				<?php echo '<div class="text-center">' . kyrya_botones_acabados() . '</div>'; ?>
 				<?php echo get_tax_navigation( $q_obj->taxonomy ); ?>
 
